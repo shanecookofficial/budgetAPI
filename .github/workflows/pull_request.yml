@@ -37,6 +37,9 @@ jobs:
 
     - name: Run tests
       run: npm test
+      env:
+        CI: true
+
 
     - name: Upload test coverage
       uses: actions/upload-artifact@v2
