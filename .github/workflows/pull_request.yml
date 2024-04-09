@@ -13,8 +13,27 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
     - name: Install dependencies
       run: npm install
+
+    - name: Set up environment variables
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+      run: |
+        echo "MONGODB_URI=${MONGODB_URI}" >> $GITHUB_ENV
+        echo "DB_NAME=${DB_NAME}" >> $GITHUB_ENV
+        echo "GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}" >> $GITHUB_ENV
+        echo "GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}" >> $GITHUB_ENV
+        echo "SESSION_SECRET=${SESSION_SECRET}" >> $GITHUB_ENV
 
     - name: Run tests
       run: npm test
