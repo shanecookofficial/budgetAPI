@@ -124,8 +124,7 @@
   },
   "scripts": {
     "start": "nodemon app.js",
-    "test": "jest --detectOpenHandles"
-
+    "test": "jest --ci"
   },
   "keywords": [],
   "author": "",

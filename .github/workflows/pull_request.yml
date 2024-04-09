@@ -40,6 +40,8 @@ jobs:
       env:
         CI: true
 
+    - name: Debug step if tests hang
+      run: echo "Tests completed or hung"
 
     - name: Upload test coverage
       uses: actions/upload-artifact@v2
