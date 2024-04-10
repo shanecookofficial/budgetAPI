@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+</head>
+<body>
+    <h1>Transactions</h1>
+    <!-- Filter options -->
+    <form action="/transactions" method="GET">
+        <label for="category">Filter by Category:</label>
+        <select id="category" name="category">
+            <option value="">All Categories</option>
+            <% categories.forEach(category => { %>
+                <option value="<%= category._id %>" <% if (category._id.toString() === req.query.category) { %> selected <% } %>><%= category.name %></option>
+            <% }); %>
+        </select>
+        <label for="sortByDate">Sort by Date:</label>
+        <select id="sortByDate" name="sortByDate">
+            <option value="">Default</option>
+            <option value="asc" <% if (req.query.sortByDate === 'asc') { %> selected <% } %>>Oldest to Newest</option>
+            <option value="desc" <% if (req.query.sortByDate === 'desc') { %> selected <% } %>>Newest to Oldest</option>
+        </select>
+        <label for="sortByAmount">Sort by Amount:</label>
+        <select id="sortByAmount" name="sortByAmount">
+            <option value="">Default</option>
+            <option value="asc" <% if (req.query.sortByAmount === 'asc') { %> selected <% } %>>Lowest to Highest</option>
+            <option value="desc" <% if (req.query.sortByAmount === 'desc') { %> selected <% } %>>Highest to Lowest</option>
+        </select>
+        <button type="submit">Apply Filters</button>
+    </form>
+    
+    <ul>
+        <% transactions.forEach(transaction => { %>
+            <li>
+                Account: <%= transaction.account %><br>
+                Description: <%= transaction.description %><br>
+                <% if (transaction.categoryName) { %>
+                    Category: <%= transaction.categoryName %><br>
+                <% } else { %>
+                    Category: No category<br>
+                <% } %>
+                Amount: <%= transaction.amount %><br>
+                Date and Time: <%= transaction.datetime %><br>
+                Type: <%= transaction.type %><br>
+                <form action="/transactions/delete/<%= transaction._id %>" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+                <a href="/transactions/edit/<%= transaction._id %>">Edit</a>
+            </li>
+        <% }); %>
+    </ul>
+
+    <h2>Create a Transaction</h2>
+    <form action="/transactions/new" method="GET">
+        <button type="submit">Create New Transaction</button>
+    </form>
+    <form action="/home" method="GET">
+        <button type="submit">Home</button>
+    </form>
+</body>
+</html>

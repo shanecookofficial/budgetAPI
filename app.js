@@ -1,10 +1,9 @@
-// app.js
-
 const express = require('express');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const passport = require('./src/config/passport');
 const bodyParser = require('body-parser'); // Import body-parser middleware
+const methodOverride = require('method-override'); // Import method-override middleware
 const routes = require('./src/routes');
 const path = require('path'); // Import path module for handling file paths
 const { connectDB } = require('./src/db/connect'); // Import connectDB function
@@ -30,6 +29,9 @@ app.use(bodyParser.json());
 
 // Parse incoming requests with URL-encoded payloads
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Use method-override middleware
+app.use(methodOverride('_method'));
 
 // Connect to the database
 connectDB()
