@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+</head>
+<body>
+    <h1>Categories</h1>
+    <!-- Category list -->
+    <ul>
+        <% categories.forEach(category => { %>
+            <li>
+                <%= category.name %>: <%= category.description %>
+                <form action="/categories/delete/<%= category._id %>" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+                <form action="/categories/edit/<%= category._id %>" method="GET">
+                    <button type="submit">Edit</button>
+                </form>                    
+            </li>
+        <% }); %>
+    </ul>
+    
+    <!-- Create category form -->
+    <h2>Create a Category</h2>
+    <form action="/categories/new" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+        <button type="submit">Create</button>
+    </form>
+    
+    <!-- Navigation -->
+    <form action="/home" method="GET">
+        <button type="submit">Home</button>
+    </form>
+</body>
+</html>
