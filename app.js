@@ -4,6 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const passport = require('./src/config/passport');
+const bodyParser = require('body-parser'); // Import body-parser middleware
 const routes = require('./src/routes');
 const { connectDB } = require('./src/db/connect'); // Correct import path
 
@@ -16,6 +17,12 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
+
+// Parse incoming requests with JSON payloads
+app.use(bodyParser.json());
+
+// Parse incoming requests with URL-encoded payloads
+app.use(bodyParser.urlencoded({ extended: true }));
 
 connectDB() // Call connectDB function first
     .then(() => {
