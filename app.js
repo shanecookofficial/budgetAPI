@@ -6,7 +6,8 @@ const dotenv = require('dotenv');
 const passport = require('./src/config/passport');
 const bodyParser = require('body-parser'); // Import body-parser middleware
 const routes = require('./src/routes');
-const { connectDB } = require('./src/db/connect'); // Correct import path
+const path = require('path'); // Import path module for handling file paths
+const { connectDB } = require('./src/db/connect'); // Import connectDB function
 
 dotenv.config();
 
@@ -18,13 +19,20 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+// Set the path to the views directory
+app.set('views', path.join(__dirname, 'src', 'views'));
+
+// Set 'ejs' as the view engine
+app.set('view engine', 'ejs');
+
 // Parse incoming requests with JSON payloads
 app.use(bodyParser.json());
 
 // Parse incoming requests with URL-encoded payloads
 app.use(bodyParser.urlencoded({ extended: true }));
 
-connectDB() // Call connectDB function first
+// Connect to the database
+connectDB()
     .then(() => {
         console.log('Connected to MongoDB');
         app.use(passport.initialize()); // Initialize Passport after database connection is established
