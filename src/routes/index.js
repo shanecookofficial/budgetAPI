@@ -16,6 +16,7 @@ router.use('/logout', require('./logout'));
 router.use('/home', require('./home'));
 router.use('/profile', require('./profile'));
 router.use('/categories', require('./categories'));
-router.use('/transactions', require('./transactions')); // Add this line to use the transactions route
+router.use('/transactions', require('./transactions'));
+router.use('/budgets', require('./budgets'));
 
 module.exports = router;

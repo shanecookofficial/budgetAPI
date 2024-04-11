@@ -1,5 +1,3 @@
-<!-- views/profile.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +12,47 @@
         <input type="text" id="preferredName" name="preferredName" value="<%= preferredName %>">
         <button type="submit">Update</button>
     </form>
-    <form action="/profile/delete" method="POST">
-        <button type="submit">Delete Account</button>
+    <!-- Delete Account Form -->
+    <form id="deleteForm" action="/profile/delete" method="POST">
+        <button id="deleteButton" type="button">Delete Account</button>
     </form>
     <form action="/home" method="GET">
         <button type="submit">Home</button>
     </form>
     <form action="/logout" method="GET">
         <button type="submit">Logout</button>
-    </form>   
+    </form>
+
+    <!-- Confirmation Popup -->
+    <div id="confirmationPopup" style="display: none;">
+        <p>Are you sure you want to delete your account?</p>
+        <button id="confirmDeleteButton">Yes</button>
+        <button id="cancelDeleteButton">No</button>
+    </div>
+
+    <!-- JavaScript to handle confirmation popup -->
+    <script>
+        // Get references to the delete form and buttons
+        const deleteForm = document.getElementById('deleteForm');
+        const deleteButton = document.getElementById('deleteButton');
+        const confirmationPopup = document.getElementById('confirmationPopup');
+        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        const cancelDeleteButton = document.getElementById('cancelDeleteButton');
+
+        // Show confirmation popup when delete button is clicked
+        deleteButton.addEventListener('click', () => {
+            confirmationPopup.style.display = 'block';
+        });
+
+        // Hide confirmation popup when cancel button is clicked
+        cancelDeleteButton.addEventListener('click', () => {
+            confirmationPopup.style.display = 'none';
+        });
+
+        // Submit delete form when confirmation is given
+        confirmDeleteButton.addEventListener('click', () => {
+            deleteForm.submit();
+        });
+    </script>
 </body>
 </html>

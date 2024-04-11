@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <style>
+        /* Add your CSS styles here */
+        /* Example styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            margin-top: 10px;
+            text-align: center;
+        }
+        nav a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #ddd;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><%= pageTitle %></h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/categories">Categories</a>
+        <a href="/transactions">Transactions</a>
+        <a href="/budgets">Budgets</a>
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <div class="container">
+        <!-- Include content from individual views -->
+        <%= include content %>
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgets</title>
+</head>
+<body>
+    <h1>Budgets</h1>
+    <a href="/">Home</a> <!-- Home button -->
+
+    <% if (budgets.length > 0) { %>
+        <% budgets.forEach(budget => { %>
+            <div>
+                <h2>Budget for <%= budget.categoryName %></h2>
+                <p><strong>Dates:</strong> <%= formatDate(budget.startDate) %> - <%= formatDate(budget.endDate) %></p>
+                <p>Amount: $<%= budget.amount %></p>
+                <p>Total Spent: $<%= budget.totalSpent %></p>
+                <h3>Transactions</h3>
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                    <% budget.transactions.forEach(transaction => { %>
+                        <tr>
+                            <td><%= formatDate(transaction.date) %></td>
+                            <td><%= transaction.description %></td>
+                            <td>$<%= transaction.amount %></td>
+                        </tr>
+                    <% }); %>
+                </table>
+                <form action="/budgets/delete/<%= budget._id %>" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p>No budgets found.</p>
+    <% } %>
+</body>
+</html>

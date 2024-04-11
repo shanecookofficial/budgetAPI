@@ -52,24 +52,6 @@ router.post('/new', async (req, res) => {
     }
 });
 
-// Route to handle the deletion of a specific category
-router.post('/delete/:id', async (req, res) => {
-    try {
-        if (!req.user) {
-            return res.redirect('/');
-        }
-
-        const db = getDB();
-        const categoryId = req.params.id; // Get the category ID from the request parameters
-        await db.collection('categories').deleteOne({ _id: new ObjectId(categoryId) }); // Construct ObjectId using new
-
-        res.redirect('/categories');
-    } catch (error) {
-        console.error("Error deleting category:", error);
-        res.status(500).send("Error deleting category");
-    }
-});
-
 // Route to render the form for editing a category
 router.get('/edit/:id', async (req, res) => {
     try {
@@ -89,6 +71,30 @@ router.get('/edit/:id', async (req, res) => {
     } catch (error) {
         console.error("Error rendering edit category form:", error);
         res.status(500).send("Error rendering edit category form");
+    }
+});
+
+// Route to handle editing of a specific category
+router.put('/edit/:id', async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.redirect('/');
+        }
+
+        const db = getDB();
+        const categoryId = req.params.id; // Get the category ID from the request parameters
+        const { name, description } = req.body;
+
+        // Update the category in the categories collection
+        await db.collection('categories').updateOne(
+            { _id: new ObjectId(categoryId) },
+            { $set: { name, description } }
+        );
+
+        res.redirect('/categories');
+    } catch (error) {
+        console.error("Error editing category:", error);
+        res.status(500).send("Error editing category");
     }
 });
 
