@@ -1,239 +1,238 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Budget API",
-      "description": "API for managing budgets",
-      "version": "1.0.0"
-    },
-    "servers": [
-      {
-        "url": "http://localhost:3000",
-        "description": "Local server"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Budget API",
+    "description": "API for managing budgets",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://budgetapi-4gej.onrender.com",
+      "description": "Hosted server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Redirect to Home if authenticated, else Authenticate with Google",
+        "responses": {
+          "200": {
+            "description": "Redirects or displays authentication link"
+          }
+        }
       }
-    ],
-    "paths": {
-      "/": {
-        "get": {
-          "summary": "Redirect to Home if authenticated, else Authenticate with Google",
-          "responses": {
-            "200": {
-              "description": "Redirects or displays authentication link"
-            }
+    },
+    "/auth/google": {
+      "get": {
+        "summary": "Initiate Google OAuth 2.0 authentication",
+        "responses": {
+          "302": {
+            "description": "Redirects to Google authentication page"
+          }
+        }
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "summary": "Handle Google OAuth 2.0 callback",
+        "responses": {
+          "302": {
+            "description": "Redirects after authentication"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "summary": "Logout user",
+        "responses": {
+          "302": {
+            "description": "Redirects after logout"
+          }
+        }
+      }
+    },
+    "/home": {
+      "get": {
+        "summary": "Get user's home page",
+        "responses": {
+          "200": {
+            "description": "User's home page"
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "summary": "Get user's profile",
+        "responses": {
+          "200": {
+            "description": "User's profile"
           }
         }
       },
-      "/auth/google": {
-        "get": {
-          "summary": "Initiate Google OAuth 2.0 authentication",
-          "responses": {
-            "302": {
-              "description": "Redirects to Google authentication page"
-            }
+      "post": {
+        "summary": "Update user's preferred name",
+        "responses": {
+          "302": {
+            "description": "Redirects after updating preferred name"
           }
         }
       },
-      "/auth/google/callback": {
-        "get": {
-          "summary": "Handle Google OAuth 2.0 callback",
-          "responses": {
-            "302": {
-              "description": "Redirects after authentication"
-            }
+      "delete": {
+        "summary": "Delete user account",
+        "responses": {
+          "302": {
+            "description": "Redirects after deleting account"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "summary": "Get user's categories",
+        "responses": {
+          "200": {
+            "description": "User's categories"
           }
         }
       },
-      "/logout": {
-        "get": {
-          "summary": "Logout user",
-          "responses": {
-            "302": {
-              "description": "Redirects after logout"
-            }
+      "post": {
+        "summary": "Create a new category",
+        "responses": {
+          "302": {
+            "description": "Redirects after creating category"
+          }
+        }
+      }
+    },
+    "/categories/new": {
+      "get": {
+        "summary": "Render form for creating a new category",
+        "responses": {
+          "200": {
+            "description": "Rendered form"
+          }
+        }
+      }
+    },
+    "/categories/edit/{id}": {
+      "get": {
+        "summary": "Render form for editing a category",
+        "responses": {
+          "200": {
+            "description": "Rendered form"
           }
         }
       },
-      "/home": {
-        "get": {
-          "summary": "Get user's home page",
-          "responses": {
-            "200": {
-              "description": "User's home page"
-            }
+      "put": {
+        "summary": "Update a category",
+        "responses": {
+          "302": {
+            "description": "Redirects after updating category"
           }
         }
       },
-      "/profile": {
-        "get": {
-          "summary": "Get user's profile",
-          "responses": {
-            "200": {
-              "description": "User's profile"
-            }
+      "post": {
+        "summary": "Delete a category",
+        "responses": {
+          "302": {
+            "description": "Redirects after deleting category"
           }
-        },
-        "post": {
-          "summary": "Update user's preferred name",
-          "responses": {
-            "302": {
-              "description": "Redirects after updating preferred name"
-            }
-          }
-        },
-        "delete": {
-          "summary": "Delete user account",
-          "responses": {
-            "302": {
-              "description": "Redirects after deleting account"
-            }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "summary": "Get user's transactions",
+        "responses": {
+          "200": {
+            "description": "User's transactions"
           }
         }
       },
-      "/categories": {
-        "get": {
-          "summary": "Get user's categories",
-          "responses": {
-            "200": {
-              "description": "User's categories"
-            }
+      "post": {
+        "summary": "Create a new transaction",
+        "responses": {
+          "302": {
+            "description": "Redirects after creating transaction"
           }
-        },
-        "post": {
-          "summary": "Create a new category",
-          "responses": {
-            "302": {
-              "description": "Redirects after creating category"
-            }
+        }
+      }
+    },
+    "/transactions/new": {
+      "get": {
+        "summary": "Render form for creating a new transaction",
+        "responses": {
+          "200": {
+            "description": "Rendered form"
+          }
+        }
+      }
+    },
+    "/transactions/edit/{id}": {
+      "get": {
+        "summary": "Render form for editing a transaction",
+        "responses": {
+          "200": {
+            "description": "Rendered form"
           }
         }
       },
-      "/categories/new": {
-        "get": {
-          "summary": "Render form for creating a new category",
-          "responses": {
-            "200": {
-              "description": "Rendered form"
-            }
+      "put": {
+        "summary": "Update a transaction",
+        "responses": {
+          "302": {
+            "description": "Redirects after updating transaction"
           }
         }
       },
-      "/categories/edit/{id}": {
-        "get": {
-          "summary": "Render form for editing a category",
-          "responses": {
-            "200": {
-              "description": "Rendered form"
-            }
+      "post": {
+        "summary": "Delete a transaction",
+        "responses": {
+          "302": {
+            "description": "Redirects after deleting transaction"
           }
-        },
-        "put": {
-          "summary": "Update a category",
-          "responses": {
-            "302": {
-              "description": "Redirects after updating category"
-            }
-          }
-        },
-        "post": {
-          "summary": "Delete a category",
-          "responses": {
-            "302": {
-              "description": "Redirects after deleting category"
-            }
+        }
+      }
+    },
+    "/budgets": {
+      "get": {
+        "summary": "Get user's budgets",
+        "responses": {
+          "200": {
+            "description": "User's budgets"
           }
         }
       },
-      "/transactions": {
-        "get": {
-          "summary": "Get user's transactions",
-          "responses": {
-            "200": {
-              "description": "User's transactions"
-            }
-          }
-        },
-        "post": {
-          "summary": "Create a new transaction",
-          "responses": {
-            "302": {
-              "description": "Redirects after creating transaction"
-            }
+      "post": {
+        "summary": "Create a new budget",
+        "responses": {
+          "302": {
+            "description": "Redirects after creating budget"
           }
         }
-      },
-      "/transactions/new": {
-        "get": {
-          "summary": "Render form for creating a new transaction",
-          "responses": {
-            "200": {
-              "description": "Rendered form"
-            }
+      }
+    },
+    "/budgets/new": {
+      "get": {
+        "summary": "Render form for creating a new budget",
+        "responses": {
+          "200": {
+            "description": "Rendered form"
           }
         }
-      },
-      "/transactions/edit/{id}": {
-        "get": {
-          "summary": "Render form for editing a transaction",
-          "responses": {
-            "200": {
-              "description": "Rendered form"
-            }
-          }
-        },
-        "put": {
-          "summary": "Update a transaction",
-          "responses": {
-            "302": {
-              "description": "Redirects after updating transaction"
-            }
-          }
-        },
-        "post": {
-          "summary": "Delete a transaction",
-          "responses": {
-            "302": {
-              "description": "Redirects after deleting transaction"
-            }
-          }
-        }
-      },
-      "/budgets": {
-        "get": {
-          "summary": "Get user's budgets",
-          "responses": {
-            "200": {
-              "description": "User's budgets"
-            }
-          }
-        },
-        "post": {
-          "summary": "Create a new budget",
-          "responses": {
-            "302": {
-              "description": "Redirects after creating budget"
-            }
-          }
-        }
-      },
-      "/budgets/new": {
-        "get": {
-          "summary": "Render form for creating a new budget",
-          "responses": {
-            "200": {
-              "description": "Rendered form"
-            }
-          }
-        }
-      },
-      "/budgets/delete/{id}": {
-        "post": {
-          "summary": "Delete a budget",
-          "responses": {
-            "302": {
-              "description": "Redirects after deleting budget"
-            }
+      }
+    },
+    "/budgets/delete/{id}": {
+      "post": {
+        "summary": "Delete a budget",
+        "responses": {
+          "302": {
+            "description": "Redirects after deleting budget"
           }
         }
       }
     }
   }
-  
+}
