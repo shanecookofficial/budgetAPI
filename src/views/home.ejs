@@ -1,28 +1,39 @@
-<!-- views/home.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Welcome to Your Budget App</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <h1>Hello <%= displayName %>!</h1>
-    <form action="/profile" method="GET">
-        <button type="submit">Profile</button>
-    </form>
-    <form action="/logout" method="GET">
-        <button type="submit">Logout</button>
-    </form>
-    <form action="/categories" method="GET">
-        <button type="submit">Categories</button>
-    </form>
-    <form action="/transactions" method="GET"> <!-- Add a new form for Transactions -->
-        <button type="submit">Transactions</button> <!-- Button for Transactions -->
-    </form>
-    <form action="/budgets" method="GET"> <!-- Add a new form for Budgets -->
-        <button type="submit">Budgets</button> <!-- Button for Budgets -->
-    </form>
+
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="navbar-brand">BudgetAPI</a>
+        <ul class="navbar-nav">
+            <li><a href="/budgets">Budgets</a></li>
+            <li><a href="/transactions">Transactions</a></li>
+            <li><a href="/categories">Categories</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li class="navbar-logout"><a href="/logout" class="btn btn-secondary">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="container">
+        <section class="hero">
+            <h1>Welcome  <%= displayName %>!</h1>
+        </section>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 BudgetAPI. All rights reserved.</p>
+    </div>
+</footer>
+
 </body>
 </html>

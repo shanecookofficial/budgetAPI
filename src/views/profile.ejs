@@ -4,55 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Hello, <%= displayName %>!</h1>
-    <form action="/profile/update-preferred-name" method="POST">
-        <label for="preferredName">Preferred Name:</label>
-        <input type="text" id="preferredName" name="preferredName" value="<%= preferredName %>">
-        <button type="submit">Update</button>
-    </form>
-    <!-- Delete Account Form -->
-    <form id="deleteForm" action="/profile/delete" method="POST">
-        <button id="deleteButton" type="button">Delete Account</button>
-    </form>
-    <form action="/home" method="GET">
-        <button type="submit">Home</button>
-    </form>
-    <form action="/logout" method="GET">
-        <button type="submit">Logout</button>
-    </form>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">BudgetAPI</a>
+            <ul class="navbar-nav">
+                <li><a href="/budgets">Budgets</a></li>
+                <li><a href="/transactions">Transactions</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li class="navbar-logout"><a href="/logout" class="btn btn-secondary">Log Out</a></li>
+            </ul>
+        </div>
+    </nav>
+<div class="container profile-container">
+    <h1 class="text-center">Hello, <%= displayName %>!</h1>
+    
+    <div class="form-container">
+        <form action="/profile/update-preferred-name" method="POST" class="profile-form">
+            <div class="form-group">
+                <label for="preferredName" class="form-label">Preferred Name:</label>
+                <input type="text" id="preferredName" name="preferredName" value="<%= preferredName %>" class="form-input">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
 
-    <!-- Confirmation Popup -->
-    <div id="confirmationPopup" style="display: none;">
-        <p>Are you sure you want to delete your account?</p>
-        <button id="confirmDeleteButton">Yes</button>
-        <button id="cancelDeleteButton">No</button>
+        <button id="deleteButton" class="btn btn-danger">Delete Account</button>
+
+        <!-- Hidden Delete Form to be submitted by JavaScript -->
+        <form id="deleteForm" action="/profile/delete" method="POST" hidden></form>
     </div>
 
-    <!-- JavaScript to handle confirmation popup -->
-    <script>
-        // Get references to the delete form and buttons
-        const deleteForm = document.getElementById('deleteForm');
-        const deleteButton = document.getElementById('deleteButton');
-        const confirmationPopup = document.getElementById('confirmationPopup');
-        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
-        const cancelDeleteButton = document.getElementById('cancelDeleteButton');
+    <!-- Confirmation Popup -->
+    <div id="confirmationPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <p class="popup-message">Are you sure you want to delete your account?</p>
+            <button id="confirmDeleteButton" class="btn btn-danger">Yes</button>
+            <button id="cancelDeleteButton" class="btn btn-secondary">No</button>
+        </div>
+    </div>
+</div>
 
-        // Show confirmation popup when delete button is clicked
-        deleteButton.addEventListener('click', () => {
-            confirmationPopup.style.display = 'block';
-        });
+<script>
+    // Get references to the delete form and buttons
+    const deleteForm = document.getElementById('deleteForm');
+    const deleteButton = document.getElementById('deleteButton');
+    const confirmationPopup = document.getElementById('confirmationPopup');
+    const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+    const cancelDeleteButton = document.getElementById('cancelDeleteButton');
 
-        // Hide confirmation popup when cancel button is clicked
-        cancelDeleteButton.addEventListener('click', () => {
-            confirmationPopup.style.display = 'none';
-        });
+    // Show confirmation popup when delete button is clicked
+    deleteButton.addEventListener('click', () => {
+        confirmationPopup.style.display = 'block';
+    });
 
-        // Submit delete form when confirmation is given
-        confirmDeleteButton.addEventListener('click', () => {
-            deleteForm.submit();
-        });
-    </script>
+    // Hide confirmation popup when cancel button is clicked
+    cancelDeleteButton.addEventListener('click', () => {
+        confirmationPopup.style.display = 'none';
+    });
+
+    // Submit delete form when confirmation is given
+    confirmDeleteButton.addEventListener('click', () => {
+        deleteForm.submit();
+    });
+</script>
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 BudgetAPI. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

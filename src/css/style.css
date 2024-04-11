@@ -1,0 +1,214 @@
+/* Reset some basic elements for consistency */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    font-size: 16px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #005f73;
+    text-decoration: none;
+}
+
+/* Navigation bar styles */
+.navbar {
+    background-color: #005f73;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.8rem 1rem;
+}
+
+.navbar a {
+    margin: 0 1rem;
+    padding: 0.3rem 0;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.navbar a:hover, .navbar a.active {
+    color: #aee9e0;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-nav li {
+    padding: 0.5rem 0;
+}
+
+.navbar-logout {
+    float: right;
+    margin-left: auto;
+}
+
+/* Main content and container */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px 10px; /* Horizontal margin for buttons */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: none;
+    width: auto; /* Ensures buttons only take up the space of their content */
+}
+
+.btn-primary {
+    background: #ee9b00;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    background: #ffae00;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background-color: #c9302c;
+}
+
+.btn-secondary {
+    background: none;
+    color: #005f73;
+    border: 2px solid #005f73;
+}
+
+.btn-secondary:hover {
+    background: #004e64;
+    color: #ffffff;
+    border-color: #003e51;
+}
+
+/* Form container styling */
+.form-container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-heading {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-field {
+    margin-bottom: 1rem;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-field input[type="text"],
+.form-field input[type="number"],
+.form-field input[type="datetime-local"],
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.form-field input[type="submit"],
+.form-field button {
+    width: auto;
+    padding: 0.5rem 1rem;
+    background: #005f73;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-field input[type="submit"]:hover,
+.form-field button:hover {
+    background: #004e64;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #004e64;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+/* Typography enhancements */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+    .navbar {
+        justify-content: center;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+    }
+
+    .navbar li, .navbar-logout {
+        display:block;
+        margin: 10px 0;
+    }
+
+    .navbar a {
+        padding: 0.5rem 1rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.6rem;
+    }
+
+    .form-container {
+        padding: 1rem;
+    }
+}

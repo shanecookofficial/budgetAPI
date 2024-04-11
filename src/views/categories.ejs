@@ -4,37 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Categories</h1>
-    <!-- Category list -->
-    <ul>
+
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="navbar-brand">BudgetAPI</a>
+        <ul class="navbar-nav">
+            <li><a href="/budgets">Budgets</a></li>
+            <li><a href="/transactions">Transactions</a></li>
+            <li><a href="/categories">Categories</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li class="navbar-logout"><a href="/logout" class="btn btn-secondary">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="page-title">Categories</h1>
+    <a href="/categories/new" class="btn btn-primary new-category-button">New Category</a>
+    <% if (categories.length > 0) { %>
+        <div class="category-header-container">
+            <div class="category-header">
+                <span class="category-title-header">Title</span>
+                <span class="category-description-header">Description</span>
+                <span class="category-actions-header">Actions</span>
+            </div>
+        </div>
+    <% } %>
+    <div class="category-list">
         <% categories.forEach(category => { %>
-            <li>
-                <%= category.name %>: <%= category.description %>
-                <form action="/categories/delete/<%= category._id %>" method="POST">
-                    <button type="submit">Delete</button>
-                </form>
-                <form action="/categories/edit/<%= category._id %>" method="GET">
-                    <button type="submit">Edit</button>
-                </form>                    
-            </li>
+            <div class="category-item">
+                <span class="category-name"><%= category.name %></span>
+                <span class="category-description"><%= category.description %></span>
+                <div class="category-actions">
+                    <form action="/categories/delete/<%= category._id %>" method="POST" class="category-form">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <form action="/categories/edit/<%= category._id %>" method="GET" class="category-form">
+                        <button type="submit" class="btn btn-secondary">Edit</button>
+                    </form>                    
+                </div>
+            </div>
         <% }); %>
-    </ul>
-    
-    <!-- Create category form -->
-    <h2>Create a Category</h2>
-    <form action="/categories/new" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="4" required></textarea>
-        <button type="submit">Create</button>
-    </form>
-    
-    <!-- Navigation -->
-    <form action="/home" method="GET">
-        <button type="submit">Home</button>
-    </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 BudgetAPI. All rights reserved.</p>
+    </div>
+</footer>
+
 </body>
 </html>

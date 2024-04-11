@@ -42,6 +42,24 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Route to render the form for creating a new budget
+router.get('/new', async (req, res) => {
+    try {
+        const db = getDB();
+        const userId = req.user._id;
+
+        // Retrieve categories from the database
+        const categories = await db.collection('categories').find({ userId }).toArray();
+
+        // Render the newBudgetForm view and pass the categories data
+        res.render('newBudgetForm', { categories });
+    } catch (error) {
+        console.error("Error retrieving categories:", error);
+        res.status(500).send("Error retrieving categories");
+    }
+});
+
+
 // Route to handle the creation of a new budget
 router.post('/new', async (req, res) => {
     try {

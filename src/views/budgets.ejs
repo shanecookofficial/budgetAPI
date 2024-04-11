@@ -4,40 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budgets</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Budgets</h1>
-    <a href="/">Home</a> <!-- Home button -->
+
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="navbar-brand">BudgetAPI</a>
+        <ul class="navbar-nav">
+            <li><a href="/budgets">Budgets</a></li>
+            <li><a href="/transactions">Transactions</a></li>
+            <li><a href="/categories">Categories</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li class="navbar-logout"><a href="/logout" class="btn btn-secondary">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="page-title">Budgets</h1>
+    <a href="/budgets/new" class="btn btn-primary">New Budget</a>
 
     <% if (budgets.length > 0) { %>
-        <% budgets.forEach(budget => { %>
-            <div>
-                <h2>Budget for <%= budget.categoryName %></h2>
-                <p><strong>Dates:</strong> <%= formatDate(budget.startDate) %> - <%= formatDate(budget.endDate) %></p>
-                <p>Amount: $<%= budget.amount %></p>
-                <p>Total Spent: $<%= budget.totalSpent %></p>
-                <h3>Transactions</h3>
-                <table>
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                    </tr>
-                    <% budget.transactions.forEach(transaction => { %>
-                        <tr>
-                            <td><%= formatDate(transaction.date) %></td>
-                            <td><%= transaction.description %></td>
-                            <td>$<%= transaction.amount %></td>
-                        </tr>
-                    <% }); %>
-                </table>
-                <form action="/budgets/delete/<%= budget._id %>" method="post">
-                    <button type="submit">Delete</button>
-                </form>
-            </div>
-        <% }); %>
-    <% } else { %>
-        <p>No budgets found.</p>
+        <div class="budgets-list">
+            <% budgets.forEach(budget => { %>
+                <div class="budget-item">
+                    <h2 class="budget-title">Budget for <%= budget.categoryName %></h2>
+                    <p class="budget-dates"><strong>Dates:</strong> <%= formatDate(budget.startDate) %> - <%= formatDate(budget.endDate) %></p>
+                    <p class="budget-amount">Amount: $<%= budget.amount %></p>
+                    <p class="budget-spent">Total Spent: $<%= budget.totalSpent %></p>
+                    <h3 class="transactions-title">Transactions</h3>
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% budget.transactions.forEach(transaction => { %>
+                                <tr>
+                                    <td><%= formatDate(transaction.date) %></td>
+                                    <td><%= transaction.description %></td>
+                                    <td>$<%= transaction.amount %></td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <form action="/budgets/delete/<%= budget._id %>" method="post" class="delete-form">
+                        <button type="submit" class="btn btn-danger delete-button">Delete</button>
+                    </form>
+                </div>
+            <% }); %>
+        </div>
     <% } %>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 BudgetAPI. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

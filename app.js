@@ -2,15 +2,18 @@ const express = require('express');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const passport = require('./src/config/passport');
-const bodyParser = require('body-parser'); // Import body-parser middleware
-const methodOverride = require('method-override'); // Import method-override middleware
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const routes = require('./src/routes');
-const path = require('path'); // Import path module for handling file paths
-const { connectDB } = require('./src/db/connect'); // Import connectDB function
+const path = require('path');
+const { connectDB } = require('./src/db/connect');
 
 dotenv.config();
 
 const app = express();
+
+// Serve static files from the 'src' directory
+app.use(express.static(path.join(__dirname, 'src')));
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'secret',

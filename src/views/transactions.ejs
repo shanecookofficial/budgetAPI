@@ -3,61 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transactions</title>
+    <title>Budgets</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Transactions</h1>
-    <!-- Filter options -->
-    <form action="/transactions" method="GET">
-        <label for="category">Filter by Category:</label>
-        <select id="category" name="category">
-            <option value="">All Categories</option>
-            <% categories.forEach(category => { %>
-                <option value="<%= category._id %>" <% if (category._id.toString() === req.query.category) { %> selected <% } %>><%= category.name %></option>
-            <% }); %>
-        </select>
-        <label for="sortByDate">Sort by Date:</label>
-        <select id="sortByDate" name="sortByDate">
-            <option value="">Default</option>
-            <option value="asc" <% if (req.query.sortByDate === 'asc') { %> selected <% } %>>Oldest to Newest</option>
-            <option value="desc" <% if (req.query.sortByDate === 'desc') { %> selected <% } %>>Newest to Oldest</option>
-        </select>
-        <label for="sortByAmount">Sort by Amount:</label>
-        <select id="sortByAmount" name="sortByAmount">
-            <option value="">Default</option>
-            <option value="asc" <% if (req.query.sortByAmount === 'asc') { %> selected <% } %>>Lowest to Highest</option>
-            <option value="desc" <% if (req.query.sortByAmount === 'desc') { %> selected <% } %>>Highest to Lowest</option>
-        </select>
-        <button type="submit">Apply Filters</button>
-    </form>
+
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="navbar-brand">BudgetApp</a>
+        <ul class="navbar-nav">
+            <li><a href="/budgets">Budgets</a></li>
+            <li><a href="/transactions">Transactions</a></li>
+            <li><a href="/categories">Categories</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li class="navbar-logout"><a href="/logout" class="btn btn-secondary">Log Out</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="page-title">Transactions</h1>
     
-    <ul>
+    <ul class="transaction-list">
         <% transactions.forEach(transaction => { %>
-            <li>
-                Account: <%= transaction.account %><br>
-                Description: <%= transaction.description %><br>
-                <% if (transaction.categoryName) { %>
-                    Category: <%= transaction.categoryName %><br>
-                <% } else { %>
-                    Category: No category<br>
-                <% } %>
-                Amount: <%= transaction.amount %><br>
-                Date and Time: <%= transaction.datetime %><br>
-                Type: <%= transaction.type %><br>
-                <form action="/transactions/delete/<%= transaction._id %>" method="POST">
-                    <button type="submit">Delete</button>
-                </form>
-                <a href="/transactions/edit/<%= transaction._id %>">Edit</a>
+            <li class="transaction-item">
+                <p><strong>Account:</strong> <%= transaction.account %></p>
+                <p><strong>Description:</strong> <%= transaction.description %></p>
+                <p><strong>Category:</strong> <%= transaction.categoryName || 'No category' %></p>
+                <p><strong>Amount:</strong> <%= transaction.amount %></p>
+                <p><strong>Date and Time:</strong> <%= transaction.datetime %></p>
+                <p><strong>Type:</strong> <%= transaction.type %></p>
+                <div class="transaction-actions">
+                    <form action="/transactions/delete/<%= transaction._id %>" method="POST" class="delete-form">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <a href="/transactions/edit/<%= transaction._id %>" class="btn btn-secondary">Edit</a>
+                </div>
             </li>
         <% }); %>
     </ul>
 
-    <h2>Create a Transaction</h2>
-    <form action="/transactions/new" method="GET">
-        <button type="submit">Create New Transaction</button>
-    </form>
-    <form action="/home" method="GET">
-        <button type="submit">Home</button>
-    </form>
+    <div class="create-transaction">
+        <form action="/transactions/new" method="GET" class="create-form">
+            <button type="submit" class="btn btn-primary">Create New Transaction</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
