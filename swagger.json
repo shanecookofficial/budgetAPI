@@ -1,235 +1,414 @@
 {
-  "openapi": "3.0.0",
+  "swagger": "2.0",
   "info": {
-    "title": "Budget API",
-    "description": "API for managing budgets",
+    "title": "Budget Management API",
+    "description": "API for managing user profiles, transactions, budgets, and categories.",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "https://budgetapi-4gej.onrender.com",
-      "description": "Hosted server"
-    }
-  ],
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
   "paths": {
-    "/": {
-      "get": {
-        "summary": "Redirect to Home if authenticated, else Authenticate with Google",
-        "responses": {
-          "200": {
-            "description": "Redirects or displays authentication link"
-          }
-        }
-      }
-    },
     "/auth/google": {
       "get": {
-        "summary": "Initiate Google OAuth 2.0 authentication",
+        "summary": "Google OAuth login",
+        "description": "Redirects to Google for authentication.",
         "responses": {
           "302": {
-            "description": "Redirects to Google authentication page"
+            "description": "Redirects to Google's OAuth service"
           }
         }
       }
     },
     "/auth/google/callback": {
       "get": {
-        "summary": "Handle Google OAuth 2.0 callback",
+        "summary": "Google OAuth callback",
+        "description": "Handles the callback from Google after authentication.",
         "responses": {
           "302": {
-            "description": "Redirects after authentication"
+            "description": "Redirects to home on successful authentication"
+          },
+          "401": {
+            "description": "Authentication failed"
           }
         }
       }
     },
     "/logout": {
       "get": {
-        "summary": "Logout user",
+        "summary": "Logout",
+        "description": "Logs the user out and destroys the session.",
         "responses": {
           "302": {
-            "description": "Redirects after logout"
+            "description": "Redirects to the root"
           }
         }
       }
     },
     "/home": {
       "get": {
-        "summary": "Get user's home page",
+        "summary": "Home Page",
+        "description": "Renders the home page for logged-in users.",
         "responses": {
           "200": {
-            "description": "User's home page"
+            "description": "Home page content"
+          },
+          "302": {
+            "description": "Redirects to login if not authenticated"
           }
         }
       }
     },
     "/profile": {
       "get": {
-        "summary": "Get user's profile",
+        "summary": "User Profile",
+        "description": "Displays the user's profile.",
         "responses": {
           "200": {
-            "description": "User's profile"
+            "description": "Profile page content"
+          },
+          "302": {
+            "description": "Redirects to login if not authenticated"
           }
         }
       },
       "post": {
-        "summary": "Update user's preferred name",
-        "responses": {
-          "302": {
-            "description": "Redirects after updating preferred name"
+        "summary": "Update Profile",
+        "description": "Updates the user's profile information.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "preferredName",
+            "description": "The user's preferred name to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "preferredName": {
+                  "type": "string"
+                }
+              }
+            }
           }
-        }
-      },
-      "delete": {
-        "summary": "Delete user account",
+        ],
         "responses": {
           "302": {
-            "description": "Redirects after deleting account"
+            "description": "Redirects to the profile page"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       }
     },
     "/categories": {
       "get": {
-        "summary": "Get user's categories",
+        "summary": "List Categories",
+        "description": "Lists all categories belonging to the user.",
         "responses": {
           "200": {
-            "description": "User's categories"
+            "description": "An array of categories"
+          },
+          "302": {
+            "description": "Redirects to login if not authenticated"
           }
         }
       },
       "post": {
-        "summary": "Create a new category",
+        "summary": "Create Category",
+        "description": "Creates a new category.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "category",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after creating category"
+          "201": {
+            "description": "Category created"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       }
     },
-    "/categories/new": {
-      "get": {
-        "summary": "Render form for creating a new category",
-        "responses": {
-          "200": {
-            "description": "Rendered form"
-          }
-        }
-      }
-    },
-    "/categories/edit/{id}": {
-      "get": {
-        "summary": "Render form for editing a category",
-        "responses": {
-          "200": {
-            "description": "Rendered form"
-          }
-        }
-      },
+    "/categories/{id}": {
       "put": {
-        "summary": "Update a category",
+        "summary": "Update Category",
+        "description": "Updates a specific category.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Category ID"
+          },
+          {
+            "in": "body",
+            "name": "category",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after updating category"
+          "200": {
+            "description": "Category updated"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       },
-      "post": {
-        "summary": "Delete a category",
+      "delete": {
+        "summary": "Delete Category",
+        "description": "Deletes a specific category.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Category ID"
+          }
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after deleting category"
+          "204": {
+            "description": "Category deleted"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       }
     },
     "/transactions": {
       "get": {
-        "summary": "Get user's transactions",
+        "summary": "List Transactions",
+        "description": "Lists all transactions belonging to the user.",
         "responses": {
           "200": {
-            "description": "User's transactions"
+            "description": "An array of transactions"
+          },
+          "302": {
+            "description": "Redirects to login if not authenticated"
           }
         }
       },
       "post": {
-        "summary": "Create a new transaction",
+        "summary": "Create Transaction",
+        "description": "Creates a new transaction.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "transaction",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "categoryId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "datetime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after creating transaction"
+          "201": {
+            "description": "Transaction created"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       }
     },
-    "/transactions/new": {
-      "get": {
-        "summary": "Render form for creating a new transaction",
-        "responses": {
-          "200": {
-            "description": "Rendered form"
-          }
-        }
-      }
-    },
-    "/transactions/edit/{id}": {
-      "get": {
-        "summary": "Render form for editing a transaction",
-        "responses": {
-          "200": {
-            "description": "Rendered form"
-          }
-        }
-      },
+    "/transactions/{id}": {
       "put": {
-        "summary": "Update a transaction",
+        "summary": "Update Transaction",
+        "description": "Updates a specific transaction.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Transaction ID"
+          },
+          {
+            "in": "body",
+            "name": "transaction",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "categoryId": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "datetime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after updating transaction"
+          "200": {
+            "description": "Transaction updated"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       },
-      "post": {
-        "summary": "Delete a transaction",
+      "delete": {
+        "summary": "Delete Transaction",
+        "description": "Deletes a specific transaction.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Transaction ID"
+          }
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after deleting transaction"
+          "204": {
+            "description": "Transaction deleted"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       }
     },
     "/budgets": {
       "get": {
-        "summary": "Get user's budgets",
+        "summary": "List Budgets",
+        "description": "Lists all budgets for the user.",
         "responses": {
           "200": {
-            "description": "User's budgets"
+            "description": "An array of budgets"
+          },
+          "302": {
+            "description": "Redirects to login if not authenticated"
           }
         }
       },
       "post": {
-        "summary": "Create a new budget",
+        "summary": "Create Budget",
+        "description": "Creates a new budget for the user.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "budget",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "endDate": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "amount": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after creating budget"
+          "201": {
+            "description": "Budget created"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       }
     },
-    "/budgets/new": {
-      "get": {
-        "summary": "Render form for creating a new budget",
-        "responses": {
-          "200": {
-            "description": "Rendered form"
+    "/budgets/{id}": {
+      "delete": {
+        "summary": "Delete Budget",
+        "description": "Deletes a specific budget.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "Budget ID"
           }
-        }
-      }
-    },
-    "/budgets/delete/{id}": {
-      "post": {
-        "summary": "Delete a budget",
+        ],
         "responses": {
-          "302": {
-            "description": "Redirects after deleting budget"
+          "204": {
+            "description": "Budget deleted"
+          },
+          "401": {
+            "description": "Unauthorized if not logged in"
           }
         }
       }
