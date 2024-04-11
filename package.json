@@ -17,6 +17,7 @@
     "call-me-maybe": "^1.0.2",
     "commander": "^6.2.0",
     "concat-map": "^0.0.1",
+    "connect-mongodb-session": "^5.0.0",
     "content-disposition": "^0.5.4",
     "content-type": "^1.0.5",
     "cookie": "^0.6.0",

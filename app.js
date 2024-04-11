@@ -7,40 +7,37 @@ const methodOverride = require('method-override');
 const routes = require('./src/routes');
 const path = require('path');
 const { connectDB } = require('./src/db/connect');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 dotenv.config();
 
 const app = express();
 
-// Serve static files from the 'src' directory
 app.use(express.static(path.join(__dirname, 'src')));
+
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URI,
+    collection: 'sessions'
+});
 
 app.use(session({
     secret: process.env.SESSION_SECRET || 'secret',
     resave: false,
     saveUninitialized: true,
+    store: store
 }));
 
-// Set the path to the views directory
 app.set('views', path.join(__dirname, 'src', 'views'));
-
-// Set 'ejs' as the view engine
 app.set('view engine', 'ejs');
 
-// Parse incoming requests with JSON payloads
 app.use(bodyParser.json());
-
-// Parse incoming requests with URL-encoded payloads
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Use method-override middleware
 app.use(methodOverride('_method'));
 
-// Connect to the database
 connectDB()
     .then(() => {
         console.log('Connected to MongoDB');
-        app.use(passport.initialize()); // Initialize Passport after database connection is established
+        app.use(passport.initialize());
         app.use(passport.session());
         app.use('/', routes);
     })
